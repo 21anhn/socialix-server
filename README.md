@@ -1,1 +1,1 @@
-# social-media-server
+# socialix-server
