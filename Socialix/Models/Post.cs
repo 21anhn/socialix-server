@@ -3,15 +3,15 @@
     /// <summary>
     /// Post Entity
     /// </summary>
-    public class Post : IBaseEntity
+    public class Post
     {
         public Guid Id { get; set; }
-        public string Title { get; set; } = string.Empty;
+        public Guid UserId { get; set; }
         public string Content { get; set; } = string.Empty;
-        public List<string>? ImageUrls { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
-        public ICollection<Comment>? Comments { get; set; }
-        public ICollection<Like>? Likes { get; set; }
+        public List<string>? MediaUrls { get; set; }
+        public decimal CreatedAt { get; set; } = 0;
+        public decimal UpdatedAt { get; set; } = 0;
+        public User? User { get; set; }
+        public bool IsDelete { get; set; }
     }
 }

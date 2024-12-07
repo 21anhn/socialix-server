@@ -1,12 +1,14 @@
-﻿namespace Socialix.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace Socialix.Models
 {
     /// <summary>
     /// Role Entity
     /// </summary>
-    public class Role
+    public class Role : IdentityRole<Guid>
     {
-        public Guid Id { get; set; }
-        public string? RoleName { get; set; }
-        public ICollection<User>? Users { get; set; }
+        public override Guid Id { get => base.Id; set => base.Id = value; }
+        public override string? Name { get => base.Name; set => base.Name = value; }
+        public ICollection<UserRole>? UserRoles { get; set; }
     }
 }
