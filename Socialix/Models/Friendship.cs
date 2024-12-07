@@ -1,18 +1,23 @@
-﻿namespace Socialix.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace Socialix.Models;
+
+public partial class Friendship
 {
-    /// <summary>
-    /// Friendship Entity
-    /// </summary>
-    public class Friendship
-    {
-        public Guid Id { get; set; }
-        public Guid UserId1 { get; set; }
-        public Guid UserId2 { get; set; }
-        public string Status { get; set; } = string.Empty;
-        public decimal CreatedAt { get; set; } = 0;
-        public decimal UpdatedAt { get; set; } = 0;
-        public User? User1 { get; set; }
-        public User? User2 { get; set; }
-        public bool IsDelete { get; set; }
-    }
+    public Guid FriendshipId { get; set; }
+
+    public Guid? UserId1 { get; set; }
+
+    public Guid? UserId2 { get; set; }
+
+    public string? Status { get; set; }
+
+    public decimal? CreatedAt { get; set; }
+
+    public decimal? UpdatedAt { get; set; }
+
+    public virtual User? UserId1Navigation { get; set; }
+
+    public virtual User? UserId2Navigation { get; set; }
 }

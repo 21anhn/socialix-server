@@ -1,19 +1,27 @@
-﻿
-namespace Socialix.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace Socialix.Models;
+
+public partial class Comment
 {
-    /// <summary>
-    /// Comment Entity
-    /// </summary>
-    public class Comment 
-    {
-        public Guid Id { get; set; }
-        public Guid PostId { get; set; }
-        public Guid UserId { get; set; }
-        public string Content { get; set; } = string.Empty;
-        public decimal CreatedAt { get; set; } = 0;
-        public decimal UpdatedAt { get; set; } = 0;
-        public Post? Post { get; set; }
-        public User? User { get; set; }
-        public bool IsDeleted { get; set; }
-    }
+    public Guid CommentId { get; set; }
+
+    public Guid? PostId { get; set; }
+
+    public Guid? UserId { get; set; }
+
+    public string? Content { get; set; }
+
+    public decimal? CreatedAt { get; set; }
+
+    public decimal? UpdatedAt { get; set; }
+
+    public bool? IsDeleted { get; set; }
+
+    public virtual ICollection<Like> Likes { get; set; } = new List<Like>();
+
+    public virtual Post? Post { get; set; }
+
+    public virtual User? User { get; set; }
 }
