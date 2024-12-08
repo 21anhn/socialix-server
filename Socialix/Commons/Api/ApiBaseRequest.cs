@@ -1,4 +1,4 @@
-﻿namespace Socialix.Commons.ApiCommon
+﻿namespace Socialix.Commons.Api
 {
     public class ApiBaseRequest
     {
