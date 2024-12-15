@@ -1,6 +1,9 @@
 
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Socialix.Data;
 using Socialix.Models;
 
@@ -24,6 +27,28 @@ namespace Socialix
             builder.Services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<AuthDbContext>()
                 .AddDefaultTokenProviders();
+
+            // Config jwt
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    // Get secret key
+                    var secretKeyInAppsettings = Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"] ?? "");
+                    var secretKeyInEnv = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET_KEY") ?? "");
+                    var secretKey = secretKeyInEnv.IsNullOrEmpty() ? secretKeyInAppsettings : secretKeyInAppsettings;  
+
+                    options.RequireHttpsMetadata = false; // Ignore request from https
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+                        ValidAudience = builder.Configuration["JwtSettings:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(secretKey)        
+                    };
+                });
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
